@@ -28,27 +28,30 @@ for _ in word:
 
 while True:
     letter = input("Podaj literę: ")
-    used_letters.append(letter)
-    found_indexes = find_indexes(word, letter)
-    if len(found_indexes) == 0:
-        print("Wrong letter!")
-        lives -= 1
+    if letter.isalpha():
+        used_letters.append(letter)
+        found_indexes = find_indexes(word, letter)
+        if len(found_indexes) == 0:
+            print("Wrong letter!")
+            lives -= 1
 
+        else:
+            for index in found_indexes:
+                user_word[index] = letter
+
+            if "".join(user_word) == word:
+                print("YOU WIN! ")
+                sys.exit(0)
+
+        if lives < 0:
+            print("YOU LOST :(")
+            sys.exit(0) #kończenie programu bez żadnego błędu
+        state_of_game()
     else:
-        for index in found_indexes:
-            user_word[index] = letter
-
-        if "".join(user_word) == word:
-            print("YOU WIN! ")
-            sys.exit(0)
-
-    if lives < 0:
-        print("YOU LOST :(")
-        sys.exit(0) #kończenie programu bez żadnego błędu
-    state_of_game()
+        print("Only letters...")
 
 #Do zrobienia:
-# Walidacja wprowadzonych danych, cyfr, znaków specjalnych, etc
+# Walidacja wprowadzonych danych, cyfr, znaków specjalnych, etc, zamiana liter na małe też by się przydała
 # użytkownik nie powinien drugi raz wpisać tej samej litery, za drugim razem powinniśmy go o tym poinformować
 # lista słów, zamiast jednego słowa i losować kolejne słowo do odgadnięcia
 # może zewnętrzne Api do słów? pamiętanie które słowa już padły w grze
