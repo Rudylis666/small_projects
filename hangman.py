@@ -29,36 +29,51 @@ def validate_input(letter):
 
 def update_user_word(user_word,found_indexes,letter):
     for index in found_indexes:
+        print(user_word)
         user_word[index] = letter
     return user_word
 
 def check_game_status(user_word,lives):
     if "".join(user_word) == word:
+        state_of_game()
         print("YOU WIN! ")
-        sys.exit(0)
+        return True
     if lives < 0:
         print("YOU LOST :(")
-        sys.exit(0)  # kończenie programu bez żadnego błędu
+        return True
     state_of_game()
+
+def prepare_new_game(user_word,lives,used_letters):
+    user_word=['_'] * len(word)
+    used_letters=[]
+    lives=10
+    return user_word,used_letters,lives
 
 for _ in word:
     user_word.append("_")
 
-
 while True:
-    letter = input("Podaj literę: ").lower()
-    if validate_input(letter):
-            used_letters.append(letter)
-            found_indexes = find_indexes(word, letter)
-            if len(found_indexes) == 0:
-                print("Wrong letter!")
-                lives -= 1
-            else:
-                update_user_word(user_word,found_indexes,letter)
+    while True:
+        letter = input("Podaj literę: ").lower()
+        if validate_input(letter):
+                used_letters.append(letter)
+                found_indexes = find_indexes(word, letter)
+                if len(found_indexes) == 0:
+                    print("Wrong letter!")
+                    lives -= 1
+                else:
+                    update_user_word(user_word,found_indexes,letter)
 
-            check_game_status(user_word,word,lives)
+                if check_game_status(user_word,lives):
+                    break
+        else:
+            print("Only one letter please! No other characters!")
+    answer = input("Do you want to play again? y/n  ")
+    if answer=="n":
+        break
     else:
-        print("Only one letter please!")
+        user_word, used_letters, lives= prepare_new_game(user_word,lives,used_letters)
+
 
 # Do zrobienia:
 # użytkownik nie powinien drugi raz wpisać tej samej litery, za drugim razem powinniśmy go o tym poinformować
