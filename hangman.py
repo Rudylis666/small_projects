@@ -19,7 +19,6 @@ def find_indexes(word, letter):
 
     return indexes
 
-
 def state_of_game():
     print()
     print(user_word)
@@ -27,19 +26,21 @@ def state_of_game():
     print("Used letters: ", used_letters)
     print()
 
-
-def validate_input(letter):
+def validate_input(letter,used_letters):
+    if letter in used_letters:
+        print("This letter is already used, enter another ;)")
+        return False
     if letter.isalpha() and len(letter) == 1:
         return True
+    else:
+        print("Only one letter please! No other characters!")
     return False
-
 
 def update_user_word(user_word, found_indexes, letter):
     for index in found_indexes:
         print(user_word)
         user_word[index] = letter
     return user_word
-
 
 def check_game_status(user_word, lives):
     if "".join(user_word) == word:
@@ -51,8 +52,7 @@ def check_game_status(user_word, lives):
         return True
     state_of_game()
 
-
-def prepare_new_game(user_word, lives, used_letters, word):
+def prepare_new_game():
     used_letters = []
     lives = 10
     los = random.randrange(0, len(words))
@@ -61,19 +61,17 @@ def prepare_new_game(user_word, lives, used_letters, word):
     user_word = ['_'] * len(word)
     return user_word, lives, used_letters, word
 
-
-def another_game(user_word, lives, used_letters):
+def another_game():
     answer = input("Do you want to play again? y/n  ")
     if answer == "n":
         return False
     else:
         return True
 
-
 while True:
     while True:
         letter = input("Podaj literę: ").lower()
-        if validate_input(letter):
+        if validate_input(letter,used_letters):
             used_letters.append(letter)
             found_indexes = find_indexes(word, letter)
             if len(found_indexes) == 0:
@@ -84,18 +82,16 @@ while True:
 
             if check_game_status(user_word, lives):
                 break
-        else:
-            print("Only one letter please! No other characters!")
+
     if len(words) > 0:
-        if not another_game(user_word, lives, used_letters):
+        if not another_game():
             break
         else:
-            user_word, lives, used_letters, word = prepare_new_game(user_word, lives, used_letters, word)
+            user_word, lives, used_letters, word = prepare_new_game()
     else:
         break
 
 # Do zrobienia:
 # użytkownik nie powinien drugi raz wpisać tej samej litery, za drugim razem powinniśmy go o tym poinformować
-# lista słów, zamiast jednego słowa i losować kolejne słowo do odgadnięcia
 # może zewnętrzne Api do słów? pamiętanie które słowa już padły w grze
 # poziomy trudności, z inną liczzbą żyć
