@@ -3,8 +3,8 @@ import sys
 print("Hello in hangman game!")
 lives = 10
 word = "kamil"
-user_word = []
 used_letters = []
+user_word=['_'] * len(word)
 
 
 def find_indexes(word, letter):
@@ -49,8 +49,7 @@ def prepare_new_game(user_word,lives,used_letters):
     lives=10
     return user_word,used_letters,lives
 
-for _ in word:
-    user_word.append("_")
+
 
 while True:
     while True:
