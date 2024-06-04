@@ -1,6 +1,12 @@
+import random
+
 print("Hello in hangman game!")
 lives = 10
-word = "kamil"
+words = ["kot", "pies", "koala"]
+los = random.randrange(0, len(words))
+word = words[los]
+del words[los]
+
 used_letters = []
 user_word = ['_'] * len(word)
 
@@ -45,11 +51,16 @@ def check_game_status(user_word, lives):
         return True
     state_of_game()
 
-def prepare_new_game(user_word, lives, used_letters):
-    user_word = ['_'] * len(word)
+
+def prepare_new_game(user_word, lives, used_letters, word):
     used_letters = []
     lives = 10
-    return user_word, lives, used_letters
+    los = random.randrange(0, len(words))
+    word = words[los]
+    del words[los]
+    user_word = ['_'] * len(word)
+    return user_word, lives, used_letters, word
+
 
 def another_game(user_word, lives, used_letters):
     answer = input("Do you want to play again? y/n  ")
@@ -75,10 +86,13 @@ while True:
                 break
         else:
             print("Only one letter please! No other characters!")
-    if not another_game(user_word, lives, used_letters):
-        break
+    if len(words) > 0:
+        if not another_game(user_word, lives, used_letters):
+            break
+        else:
+            user_word, lives, used_letters, word = prepare_new_game(user_word, lives, used_letters, word)
     else:
-        user_word, lives, used_letters = prepare_new_game(user_word, lives, used_letters)
+        break
 
 # Do zrobienia:
 # użytkownik nie powinien drugi raz wpisać tej samej litery, za drugim razem powinniśmy go o tym poinformować
