@@ -18,44 +18,49 @@ def find_indexes(word, letter):
 def state_of_game():
     print()
     print(user_word)
-    print("Number of lives: ",lives)
-    print("Used letters: ",used_letters)
+    print("Number of lives: ", lives)
+    print("Used letters: ", used_letters)
     print()
 
+def validate_input(letter):
+    if letter.isalpha() and len(letter) == 1:
+        return True
+    return False
+
+def update_user_word(user_word,found_indexes,letter):
+    for index in found_indexes:
+        user_word[index] = letter
+    return user_word
+
+def check_game_status(user_word,lives):
+    if "".join(user_word) == word:
+        print("YOU WIN! ")
+        sys.exit(0)
+    if lives < 0:
+        print("YOU LOST :(")
+        sys.exit(0)  # kończenie programu bez żadnego błędu
+    state_of_game()
 
 for _ in word:
     user_word.append("_")
 
+
 while True:
     letter = input("Podaj literę: ").lower()
-    if letter.isalpha():
-        if len(letter)==1:
+    if validate_input(letter):
             used_letters.append(letter)
             found_indexes = find_indexes(word, letter)
             if len(found_indexes) == 0:
                 print("Wrong letter!")
                 lives -= 1
-
             else:
-                for index in found_indexes:
-                    user_word[index] = letter
+                update_user_word(user_word,found_indexes,letter)
 
-                if "".join(user_word) == word:
-                    print("YOU WIN! ")
-                    sys.exit(0)
-
-            if lives < 0:
-                print("YOU LOST :(")
-                sys.exit(0) #kończenie programu bez żadnego błędu
-            state_of_game()
-        else:
-            print("Only one letter please...")
+            check_game_status(user_word,word,lives)
     else:
-        print("Only letters...")
+        print("Only one letter please!")
 
-#Do zrobienia:
-# Walidacja wprowadzonych danych, cyfr, znaków specjalnych, etc, zamiana liter na małe też by się przydała
-# walidacja czy użytkownik wprowadził tylko jedną literę
+# Do zrobienia:
 # użytkownik nie powinien drugi raz wpisać tej samej litery, za drugim razem powinniśmy go o tym poinformować
 # lista słów, zamiast jednego słowa i losować kolejne słowo do odgadnięcia
 # może zewnętrzne Api do słów? pamiętanie które słowa już padły w grze
