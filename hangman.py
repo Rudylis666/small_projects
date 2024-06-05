@@ -234,5 +234,4 @@ while True:
     else:
         break
 
-# Do zrobienia:
-# wprowadzanie swoich słów
+
