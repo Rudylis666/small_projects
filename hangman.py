@@ -6,7 +6,6 @@ words = ["kot", "pies", "koala"]
 los = random.randrange(0, len(words))
 word = words[los]
 del words[los]
-
 used_letters = []
 user_word = ['_'] * len(word)
 
@@ -92,6 +91,6 @@ while True:
         break
 
 # Do zrobienia:
-# użytkownik nie powinien drugi raz wpisać tej samej litery, za drugim razem powinniśmy go o tym poinformować
 # może zewnętrzne Api do słów? pamiętanie które słowa już padły w grze
 # poziomy trudności, z inną liczzbą żyć
+# lepsza walidacja wprowadzonego wyboru, czy chce grać dalej
