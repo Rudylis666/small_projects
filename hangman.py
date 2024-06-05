@@ -1,13 +1,119 @@
 import random
 
 print("Hello in hangman game!")
-lives = 10
+lives = 8
 words = ["kot", "pies", "koala"]
 los = random.randrange(0, len(words))
 word = words[los]
 del words[los]
 used_letters = []
 user_word = ['_'] * len(word)
+PICTURES = (
+    """
+    ----------
+    |    |
+    |    
+    |
+    |
+    |
+    |
+    |
+    |
+    |
+    ----------
+    """,
+    """
+    ----------
+    |    |
+    |    O
+    |
+    |
+    |
+    |
+    |
+    |
+    |
+    ----------
+    """,
+    """
+    ----------
+    |    |
+    |    O
+    |   -+-
+    |
+    |
+    |
+    |
+    |
+    |
+    ----------
+    """,
+    """
+    ----------
+    |    |
+    |    O
+    |   -+-
+    |  /
+    | /
+    |
+    |
+    |
+    |
+    ----------
+    """,
+    """
+    ----------
+    |    |
+    |    O
+    |   -+-
+    |  /    \\
+    | /      \\
+    |
+    |
+    |
+    |
+    ----------
+    """,
+    """
+    ----------
+    |    |
+    |    O
+    |   -+-
+    |  / |  \\
+    | /  |   \\
+    |    |
+    |
+    |
+    |
+    ----------
+    """,
+    """
+    ----------
+    |    |
+    |    O
+    |   -+-
+    |  / |  \\
+    | /  |   \\
+    |    |
+    |   |
+    |   |
+    |   |
+    ----------
+    """,
+    """
+    ----------
+    |    |
+    |    O
+    |   -+-
+    |  / |  \\
+    | /  |   \\
+    |    |
+    |   |  |
+    |   |  |
+    |   |  |
+    ----------
+    """
+)
 
 
 def find_indexes(word, letter):
@@ -37,7 +143,6 @@ def validate_input(letter, used_letters):
         print("Only one letter please! No other characters!")
 
 
-
 def update_user_word(user_word, found_indexes, letter):
     for index in found_indexes:
         print(user_word)
@@ -50,8 +155,9 @@ def check_game_status(user_word, lives):
         state_of_game()
         print("YOU WIN! ")
         return True
-    if lives < 0:
+    if lives <= 0:
         print("YOU LOST :(")
+        print(PICTURES[7])
         return True
     state_of_game()
 
@@ -86,6 +192,7 @@ while True:
             found_indexes = find_indexes(word, letter)
             if len(found_indexes) == 0:
                 print("Wrong letter!")
+                print(PICTURES[8 - lives])
                 lives -= 1
             else:
                 update_user_word(user_word, found_indexes, letter)
@@ -104,4 +211,3 @@ while True:
 
 # Do zrobienia:
 # wprowadzanie swoich słów i swojej liczby żyć
-# obrazki wisielca?
