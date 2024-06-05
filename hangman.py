@@ -1,8 +1,33 @@
 import random
 
+
+def users_words():
+    words = []
+    choice = input("Do you want to create your own list of words? y/n ")
+    if choice.isalpha() and len(choice) == 1:
+        if choice == 'y':
+            number_of_words = int(input("How many words do you want to put in game? "))
+            for i in range(0, number_of_words):
+                new_word = input("Enter your word: ")
+                if new_word.isalpha():
+                    words.append(new_word)
+
+        elif choice == 'n':
+            words = my_words
+        else:
+            print("Choose between y and n")
+            users_words()
+    else:
+        print("Choose between y and n")
+        users_words()
+
+    return words
+
+
 print("Hello in hangman game!")
 lives = 8
-words = ["kot", "pies", "koala"]
+my_words = ["kot", "pies", "koala"]
+words = users_words()
 los = random.randrange(0, len(words))
 word = words[los]
 del words[los]
@@ -210,4 +235,4 @@ while True:
         break
 
 # Do zrobienia:
-# wprowadzanie swoich słów i swojej liczby żyć
+# wprowadzanie swoich słów
